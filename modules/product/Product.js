@@ -26,7 +26,12 @@ import {
   Table,
   Tag,
   Space,
+  Select,
+  Option,
 } from "antd";
+import {
+  SearchOutlined
+} from "@ant-design/icons";
 
 function Product(props) {
   const columns = [
@@ -104,20 +109,47 @@ function Product(props) {
 
   const [productName, setProductName] = useState("");
 
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+  };
+
   return (
     <div className="product-container">
       <Spin spinning={props.isLoading}>
         <TitleHead text="รายการสินค้า" icon="stock" />
         <div className="top-layout">
           <Row gutter={20}>
-            <Col md="4">Product Name</Col>
-            <Col md="8">
+            <Col span={2}>Customer Name</Col>
+            <Col span={4}>
               <Input
                 value={productName}
                 onChange={(e) => setProductName(e.target.value)}
                 type="text"
                 placeholder=""
               />
+            </Col>
+            <Col span={6}>
+              <Select
+                className="select-custom"
+                defaultValue="lucy"
+                onChange={handleChange}
+              >
+                <Option value="jack">Jack</Option>
+                <Option value="lucy">Lucy</Option>
+                <Option value="disabled" disabled>
+                  Disabled
+                </Option>
+                <Option value="Yiminghe">yiminghe</Option>
+              </Select>
+            </Col>
+            <Col>
+              <Button
+                type="primary"
+                shape="round"
+                icon={<SearchOutlined />}
+              >
+                Search
+              </Button>
             </Col>
           </Row>
         </div>

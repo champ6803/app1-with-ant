@@ -1,31 +1,38 @@
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
 import Layout from "../components/layout";
 import PrivateRoute from "../components/privateRoute";
+import { Card, Avatar } from 'antd';
+import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 
 export default function Home() {
+  const { Meta } = Card;
   return (
     <PrivateRoute fromPath="/">
       <Layout
         title="Demand Forecast Platform | Home"
         description="SCG web application"
       >
-        <div className="container-fluid px-4">
-          <h1>Welcome to Bag Nice Style!</h1>
-          <div className="card mb-4">
-            <div className="card-body">
-              This page is an example of using the light side navigation option.
-              By appending the
-              <code>.sb-sidenav-light</code>
-              class to the
-              <code>.sb-sidenav</code>
-              class, the side navigation will take on a light color scheme. The
-              <code>.sb-sidenav-dark</code>
-              is also available for a darker option.
-            </div>
-          </div>
-        </div>
+        <Card
+          style={{ width: 300 }}
+          cover={
+            <img
+              alt="example"
+              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+            />
+          }
+          actions={[
+            <SettingOutlined key="setting" />,
+            <EditOutlined key="edit" />,
+            <EllipsisOutlined key="ellipsis" />,
+          ]}
+        >
+          <Meta
+            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+            title="Card title"
+            description="This is the description"
+          />
+        </Card>
       </Layout>
     </PrivateRoute>
   );

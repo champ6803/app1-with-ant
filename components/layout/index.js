@@ -27,110 +27,83 @@ import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 import { Layout, Menu, Breadcrumb } from "antd";
 import {
-  DesktopOutlined,
-  PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
   UserOutlined,
+  VideoCameraOutlined,
+  UploadOutlined,
+  UserAddOutlined,
 } from "@ant-design/icons";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-
-const items = [
-  getItem("Option 1", "1", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("Files", "9", <FileOutlined />),
-];
-
-const items1 = ["1", "2", "3"].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
-
 function LayoutPage(props) {
   const [collapsed, setCollapsed] = useState(false);
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-      >
-        <div className="logo" />
+    <Layout className="site-layout">
+      <Sider trigger={null} collapsible collapsed={collapsed}>
+        <div className="logo">
+          <img className="img-style" src="/images/logo/logo.png" />
+        </div>
         <Menu
           theme="dark"
-          defaultSelectedKeys={["1"]}
           mode="inline"
-          items={items}
+          defaultSelectedKeys={["1"]}
+          items={[
+            {
+              key: "1",
+              icon: <UserOutlined />,
+              label: "nav 1",
+            },
+            {
+              key: "2",
+              icon: <VideoCameraOutlined />,
+              label: "nav 2",
+            },
+            {
+              key: "3",
+              icon: <UploadOutlined />,
+              label: "nav 3",
+            },
+          ]}
         />
       </Sider>
-      <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }}>
-          <Menu
-            style={{ float: "right" }}
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["2"]}
-            //items={items1}
-          >
-            <Menu.Item
-              key="setting:1"
-              onClick={(e) => {
-                Router.push("/product");
-              }}
-            >
-              Menu1
-            </Menu.Item>
-            <Menu.Item
-              key="setting:2"
-            >
-              Menu2
-            </Menu.Item>
-            <Menu.Item
-              onClick={(e) => {
-                Router.push("/logout");
-              }}
-              key="setting:3"
-            >
-              Logout
-            </Menu.Item>
-          </Menu>
-        </Header>
-        {/* <Content style={{ margin: "0 16px" }}>
-          
-          <div
-            className="site-layout-background"
-            style={{ padding: 24, minHeight: 360 }}
-          >
-            {props.children}
-          </div>
-        </Content> */}
-        <div style={{ margin: "0 16px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-        </div>
+      <Layout>
+        <Header
+          className="site-layout-background"
+          style={{
+            background: "#343a40",
+            padding: "0 16px",
+            height: 50,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            boxShadow:
+              "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+          }}
+        >
+          <div className="left-header">
+            <div className="icon-menu">
+              {React.createElement(
+                collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+                {
+                  className: "trigger",
+                  onClick: () => setCollapsed(!collapsed),
+                }
+              )}
+            </div>
 
+            <Breadcrumb style={{ margin: "16px 0" }} separator="">
+              <Breadcrumb.Item style={{ color: "white" }}>Home</Breadcrumb.Item>
+              <Breadcrumb.Separator style={{ color: "white !important" }} />
+              <Breadcrumb.Item style={{ color: "white" }}>List</Breadcrumb.Item>
+              <Breadcrumb.Separator style={{ color: "white" }} />
+              <Breadcrumb.Item style={{ color: "white" }}>App</Breadcrumb.Item>
+            </Breadcrumb>
+          </div>
+        </Header>
         <Content
+          className="site-layout-background"
           style={{
             margin: 10,
             padding: 12,
@@ -144,8 +117,14 @@ function LayoutPage(props) {
         >
           {props.children}
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
+        <Footer
+          style={{
+            height: "43px",
+            padding: "10px 15px",
+            background: "white",
+          }}
+        >
+          SCB (Production) © 2022 - RDT
         </Footer>
       </Layout>
     </Layout>
