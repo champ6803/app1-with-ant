@@ -1,4 +1,4 @@
-FROM node:12.10.0
+FROM node:14.18
 
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
@@ -13,8 +13,8 @@ COPY . .
 # Build project
 RUN npm run build
 
-# Exposing port 4000 to connect external
-EXPOSE 6000
+# Exposing port 9000 to connect external
+EXPOSE 9000
 
 # Start node server with production
 CMD ["npm", "start"]
