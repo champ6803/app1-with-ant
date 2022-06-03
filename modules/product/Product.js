@@ -27,11 +27,10 @@ import {
   Tag,
   Space,
   Select,
-  Option,
+  Card,
 } from "antd";
-import {
-  SearchOutlined
-} from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
+const { Option } = Select;
 
 function Product(props) {
   const columns = [
@@ -108,54 +107,61 @@ function Product(props) {
   ];
 
   const [productName, setProductName] = useState("");
+  const [filter, setFilter] = useState({ productName: "", nickName: "" });
 
-  const handleChange = (value) => {
+  const handleChange = (key, value) => {
     console.log(`selected ${value}`);
+    setFilter({ ...filter, [key]: value });
   };
+
+  useEffect(() => {
+    console.log("filter => ", filter);
+  }, [filter]);
 
   return (
     <div className="product-container">
       <Spin spinning={props.isLoading}>
-        <TitleHead text="รายการสินค้า" icon="stock" />
-        <div className="top-layout">
-          <Row gutter={20}>
-            <Col span={2}>Customer Name</Col>
-            <Col span={4}>
-              <Input
-                value={productName}
-                onChange={(e) => setProductName(e.target.value)}
-                type="text"
-                placeholder=""
-              />
-            </Col>
-            <Col span={6}>
-              <Select
-                className="select-custom"
-                defaultValue="lucy"
-                onChange={handleChange}
-              >
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-                <Option value="disabled" disabled>
-                  Disabled
-                </Option>
-                <Option value="Yiminghe">yiminghe</Option>
-              </Select>
-            </Col>
-            <Col>
-              <Button
-                type="primary"
-                shape="round"
-                icon={<SearchOutlined />}
-              >
-                Search
-              </Button>
-            </Col>
-          </Row>
-        </div>
-        <div className="content">
-          <Table columns={columns} dataSource={data} />
-        </div>
+        <Card className="card-custom" title="รายการสินค้า">
+          {/* <TitleHead text="รายการสินค้า" icon="stock" /> */}
+          <div className="top-layout">
+            <Row gutter={20}>
+              <Col span={2}>Customer Name</Col>
+              <Col span={4}>
+                <Input
+                  name="productName"
+                  value={filter.productName}
+                  onChange={(e) => handleChange("productName", e.target.value)}
+                  type="text"
+                  placeholder=""
+                />
+              </Col>
+              <Col span={6}>
+                <Select
+                  name="nickName"
+                  value={filter.nickName}
+                  className="select-custom"
+                  defaultValue="lucy"
+                  onChange={(e) => handleChange("nickName", e)}
+                >
+                  <Option value="jack">Jack</Option>
+                  <Option value="lucy">Lucy</Option>
+                  <Option value="disabled" disabled>
+                    Disabled
+                  </Option>
+                  <Option value="Yiminghe">yiminghe</Option>
+                </Select>
+              </Col>
+              <Col>
+                <Button type="primary" shape="round" icon={<SearchOutlined />}>
+                  Search
+                </Button>
+              </Col>
+            </Row>
+          </div>
+          <div className="content">
+            <Table columns={columns} dataSource={data} />
+          </div>
+        </Card>
       </Spin>
     </div>
   );

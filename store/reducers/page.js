@@ -5,11 +5,13 @@ export const actionTypes = {
   SetLoading: "SET_LOADING",
   SetPageLoading: "SET_PAGE_LOADING",
   SetFromPath: "SET_FROM_PATH",
+  SetSelectedMenu: "SET_SELECTED_MENU"
 };
 
 export const initialPageState = {
   isLoading: false,
   isPageLoading: true,
+  selectedMenu: ["1"],
   fromPath: "",
 };
 
@@ -33,6 +35,10 @@ export default persistReducer(
         const fromPath = action.payload.fromPath;
         return { ...state, fromPath: fromPath };
       }
+      case actionTypes.SetSelectedMenu: {
+        const selectedMenu = action.payload.selectedMenu;
+        return { ...state, selectedMenu: selectedMenu };
+      }
       default:
         return state;
     }
@@ -47,6 +53,10 @@ export const actions = {
   setPageLoading: (isPageLoading) => ({
     type: actionTypes.SetPageLoading,
     payload: { isPageLoading },
+  }),
+  setSelectedMenu: (selectedMenu) => ({
+    type: actionTypes.SetSelectedMenu,
+    payload: { selectedMenu },
   }),
   setFromPath: (fromPath) => ({
     type: actionTypes.SetFromPath,

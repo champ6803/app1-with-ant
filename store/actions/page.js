@@ -13,3 +13,7 @@ export const setLoading = (isLoading) => (dispatch) => {
 export const setFromPath = (fromPath) => (dispatch) => {
   dispatch(actions.setFromPath(fromPath));
 };
+
+export const setSelectedMenu = (selectedMenu) => (dispatch) => {
+  dispatch(actions.setSelectedMenu(selectedMenu));
+}

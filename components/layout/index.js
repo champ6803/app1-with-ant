@@ -25,45 +25,118 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu, Breadcrumb, Dropdown, Space } from "antd";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
-  UserAddOutlined,
+  LogoutOutlined,
+  DownOutlined,
+  KeyOutlined,
+  ShoppingOutlined,
+  UsergroupAddOutlined,
+  HomeOutlined,
+  ContainerOutlined
 } from "@ant-design/icons";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 function LayoutPage(props) {
   const [collapsed, setCollapsed] = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState([]);
+  const pathName = props.router.pathname;
+
+  const menu = (
+    <Menu
+      onClick={handleClickUser}
+      items={[
+        {
+          key: "1",
+          label: "Profile",
+          icon: <UserOutlined />,
+        },
+        {
+          key: "2",
+          label: <Link href="/logout">Logout</Link>,
+          icon: <LogoutOutlined />,
+        },
+      ]}
+    />
+  );
+
+  const handleClickMenu = (e) => {
+    console.log("e => ", e);
+    switch (e.key) {
+      case "1":
+        Router.push("/");
+        break;
+      case "2":
+        Router.push("/product");
+        break;
+    }
+  };
+
+  const handleClickUser = (e) => {
+    console.log("e => ", e);
+    switch (e && e.key) {
+      case "1":
+        break;
+      case "2":
+        Router.push("/logout");
+        break;
+      default:
+        break;
+    }
+  };
+
+  const getCurrentMenu = (pathName) => {
+    switch (pathName) {
+      case "/":
+        setSelectedMenu(["1"]);
+        break;
+      case "/product":
+        setSelectedMenu(["2"]);
+        break;
+    }
+  };
+
+  useEffect(() => {
+    getCurrentMenu(pathName);
+  }, [pathName]);
+
   return (
     <Layout className="site-layout">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
-          <img className="img-style" src="/images/logo/logo.png" />
+          <Img
+            width={40}
+            height={40}
+            className="img-style"
+            src="/images/logo/logo.png"
+          />
         </div>
         <Menu
+          onClick={handleClickMenu}
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          selectedKeys={selectedMenu}
           items={[
             {
               key: "1",
-              icon: <UserOutlined />,
-              label: "nav 1",
+              icon: <HomeOutlined />,
+              label: "Home",
             },
             {
               key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "nav 2",
+              icon: <ShoppingOutlined />,
+              label: "Product",
             },
             {
               key: "3",
-              icon: <UploadOutlined />,
-              label: "nav 3",
+              icon: <UsergroupAddOutlined />,
+              label: "Customer",
             },
           ]}
         />
@@ -93,13 +166,32 @@ function LayoutPage(props) {
               )}
             </div>
 
-            <Breadcrumb style={{ margin: "16px 0" }} separator="">
-              <Breadcrumb.Item style={{ color: "white" }}>Home</Breadcrumb.Item>
-              <Breadcrumb.Separator style={{ color: "white !important" }} />
-              <Breadcrumb.Item style={{ color: "white" }}>List</Breadcrumb.Item>
-              <Breadcrumb.Separator style={{ color: "white" }} />
-              <Breadcrumb.Item style={{ color: "white" }}>App</Breadcrumb.Item>
+            <Breadcrumb style={{ margin: "0 16px" }} separator="">
+              <Breadcrumb.Item>
+                <HomeOutlined style={{ color: "white" }} />
+                <Link href="/">Home</Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator />
+              <Breadcrumb.Item>
+                <ShoppingOutlined style={{ color: "white" }} />
+                <Link href="/">Product</Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator />
+              <Breadcrumb.Item>
+              <ContainerOutlined style={{ color: "white" }}/>
+                <Link href="/">Item</Link>
+              </Breadcrumb.Item>
             </Breadcrumb>
+          </div>
+          <div>
+            <Dropdown overlay={menu}>
+              <a style={{ color: "white" }} onClick={(e) => e.preventDefault()}>
+                <Space>
+                  Username
+                  <DownOutlined />
+                </Space>
+              </a>
+            </Dropdown>
           </div>
         </Header>
         <Content
@@ -107,11 +199,11 @@ function LayoutPage(props) {
           style={{
             margin: 10,
             padding: 12,
-            background: "#fff",
+            // background: "#f0f2f5",
             minHeight: 280,
-            boxShadow:
-              "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
-            borderRadius: 5,
+            // boxShadow:
+            //   "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+            // borderRadius: 5,
             overflow: "auto",
           }}
         >
@@ -132,6 +224,7 @@ function LayoutPage(props) {
 }
 
 const mapStateToProps = (state) => ({
+  ...state.page,
   ...state.auth,
 });
 
