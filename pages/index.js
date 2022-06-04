@@ -12,14 +12,29 @@ import {
   Table,
   Space,
   Tag,
+  Steps,
+  PageHeader,
+  Menu,
+  Dropdown,
+  Button,
+  Typography,
+  Tabs,
 } from "antd";
 import {
   EditOutlined,
   EllipsisOutlined,
   SettingOutlined,
   ClockCircleOutlined,
+  UserOutlined,
+  SolutionOutlined,
+  LoadingOutlined,
+  SmileOutlined,
+  MoreOutlined,
 } from "@ant-design/icons";
 const { Meta } = Card;
+const { Step } = Steps;
+const { Paragraph } = Typography;
+const { TabPane } = Tabs;
 
 const contentStyle = {
   height: "160px",
@@ -102,6 +117,114 @@ export default function Home() {
       tags: ["cool", "teacher"],
     },
   ];
+
+  const menu = (
+    <Menu
+      items={[
+        {
+          key: "1",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="http://www.alipay.com/"
+            >
+              1st menu item
+            </a>
+          ),
+        },
+        {
+          key: "2",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="http://www.taobao.com/"
+            >
+              2nd menu item
+            </a>
+          ),
+        },
+        {
+          key: "3",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="http://www.tmall.com/"
+            >
+              3rd menu item
+            </a>
+          ),
+        },
+      ]}
+    />
+  );
+
+  const DropdownMenu = () => (
+    <Dropdown key="more" overlay={menu} placement="bottomRight">
+      <Button type="text" icon={<MoreOutlined style={{ fontSize: 20 }} />} />
+    </Dropdown>
+  );
+
+  const routes = [
+    {
+      path: "index",
+      breadcrumbName: "First-level Menu",
+    },
+    {
+      path: "first",
+      breadcrumbName: "Second-level Menu",
+    },
+    {
+      path: "second",
+      breadcrumbName: "Third-level Menu",
+    },
+  ];
+
+  const IconLink = ({ src, text }) => (
+    <a className="example-link">
+      <img className="example-link-icon" src={src} alt={text} />
+      {text}
+    </a>
+  );
+
+  const content = (
+    <>
+      <Paragraph>
+        Ant Design interprets the color system into two levels: a system-level
+        color system and a product-level color system.
+      </Paragraph>
+      <Paragraph>
+        Ant Design&#x27;s design team preferred to design with the HSB color
+        model, which makes it easier for designers to have a clear psychological
+        expectation of color when adjusting colors, as well as facilitate
+        communication in teams.
+      </Paragraph>
+      <div>
+        <IconLink
+          src="https://gw.alipayobjects.com/zos/rmsportal/MjEImQtenlyueSmVEfUD.svg"
+          text="Quick Start"
+        />
+        <IconLink
+          src="https://gw.alipayobjects.com/zos/rmsportal/NbuDUAuBlIApFuDvWiND.svg"
+          text=" Product Info"
+        />
+        <IconLink
+          src="https://gw.alipayobjects.com/zos/rmsportal/ohOEPSYdDTNnyMbGuyLb.svg"
+          text="Product Doc"
+        />
+      </div>
+    </>
+  );
+
+  const Content = ({ children, extraContent }) => (
+    <Row>
+      <div style={{ flex: 1 }}>{children}</div>
+      <div className="image">{extraContent}</div>
+    </Row>
+  );
+
   const onChange = (currentSlide) => {
     console.log(currentSlide);
   };
@@ -113,10 +236,11 @@ export default function Home() {
         description="SCG web application"
       >
         <Row gutter={20} className="mb-20">
-          <Col md={24}>
+          <Col md={12}>
             <Carousel afterChange={onChange}>
               <div>
-                <h3 style={contentStyle}>1</h3>
+                {/* <h3 style={contentStyle}>1</h3> */}
+                <img src="/images/bot-banner.jpg" />
               </div>
               <div>
                 <h3 style={contentStyle}>2</h3>
@@ -128,6 +252,81 @@ export default function Home() {
                 <h3 style={contentStyle}>4</h3>
               </div>
             </Carousel>
+          </Col>
+          <Col md={12}>
+            <Card className="card-custom">
+              <PageHeader
+                title="Title"
+                className="site-page-header"
+                subTitle="This is a subtitle"
+                tags={<Tag color="blue">Running</Tag>}
+                extra={[
+                  <Button key="3">Operation</Button>,
+                  <Button key="2">Operation</Button>,
+                  <Button key="1" type="primary">
+                    Primary
+                  </Button>,
+                  <DropdownMenu key="more" />,
+                ]}
+                avatar={{
+                  src: "https://avatars1.githubusercontent.com/u/8186664?s=460&v=4",
+                }}
+              >
+                <Content
+                  extraContent={
+                    <img
+                      src="https://gw.alipayobjects.com/zos/antfincdn/K%24NnlsB%26hz/pageHeader.svg"
+                      alt="content"
+                      width="100%"
+                    />
+                  }
+                >
+                  {content}
+                </Content>
+              </PageHeader>
+            </Card>
+          </Col>
+        </Row>
+        <Row className="mb-20">
+          <Col md={24}>
+            <Card className="card-custom">
+              <PageHeader
+                title="Data Entity Name"
+                className="site-page-header"
+                subTitle="1.4 Mortgage Loan (DER_MGL)"
+                tags={<Tag color="blue">Running</Tag>}
+                extra={[
+                  <Button key="3">Operation</Button>,
+                  <Button key="2">Operation</Button>,
+                  <Button key="1" type="primary">
+                    Primary
+                  </Button>,
+                  <DropdownMenu key="more" />,
+                ]}
+                avatar={{ src: "/images/bot-logo.png" }}
+              >
+                <Content>
+                  <Steps>
+                    <Step
+                      status="finish"
+                      title="Login"
+                      icon={<UserOutlined />}
+                    />
+                    <Step
+                      status="finish"
+                      title="Verification"
+                      icon={<SolutionOutlined />}
+                    />
+                    <Step
+                      status="process"
+                      title="Pay"
+                      icon={<LoadingOutlined />}
+                    />
+                    <Step status="wait" title="Done" icon={<SmileOutlined />} />
+                  </Steps>
+                </Content>
+              </PageHeader>
+            </Card>
           </Col>
         </Row>
         <Row gutter={20} className="mb-20">
@@ -161,38 +360,6 @@ export default function Home() {
           <Col md={12}>
             <Card className="card-custom">
               <Table columns={columns} dataSource={data} />
-            </Card>
-          </Col>
-        </Row>
-        <Row gutter={20} className="mb-20">
-          <Col md={12}>
-            <Card className="card-custom">
-              <p>Card content</p>
-              <p>Card content</p>
-              <p>Card content</p>
-            </Card>
-          </Col>
-          <Col md={12}>
-            <Card
-              className="card-custom"
-              style={{ width: 300 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                />
-              }
-              actions={[
-                <SettingOutlined key="setting" />,
-                <EditOutlined key="edit" />,
-                <EllipsisOutlined key="ellipsis" />,
-              ]}
-            >
-              <Meta
-                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                title="Card title"
-                description="This is the description"
-              />
             </Card>
           </Col>
         </Row>

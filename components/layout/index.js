@@ -38,7 +38,9 @@ import {
   ShoppingOutlined,
   UsergroupAddOutlined,
   HomeOutlined,
-  ContainerOutlined
+  ContainerOutlined,
+  DatabaseOutlined,
+  IssuesCloseOutlined
 } from "@ant-design/icons";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -72,7 +74,7 @@ function LayoutPage(props) {
       case "1":
         Router.push("/");
         break;
-      case "2":
+      case "3":
         Router.push("/product");
         break;
     }
@@ -97,7 +99,7 @@ function LayoutPage(props) {
         setSelectedMenu(["1"]);
         break;
       case "/product":
-        setSelectedMenu(["2"]);
+        setSelectedMenu(["3"]);
         break;
     }
   };
@@ -111,11 +113,15 @@ function LayoutPage(props) {
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
           <Img
-            width={40}
-            height={40}
+            width={30}
+            height={30}
             className="img-style"
-            src="/images/logo/logo.png"
+            src="/images/scb-logo.png"
           />
+          <div className="logo-text">
+            <span className="text">Regulatory Data</span>
+            <span className="text">Transformation</span>
+          </div>
         </div>
         <Menu
           onClick={handleClickMenu}
@@ -130,13 +136,53 @@ function LayoutPage(props) {
             },
             {
               key: "2",
-              icon: <ShoppingOutlined />,
-              label: "Product",
+              icon: <DatabaseOutlined />,
+              label: "Data Entity",
+              children: [
+                {
+                  key: "3",
+                  label: "View & Approve Data Entity",
+                },
+                {
+                  key: "4",
+                  label: "Approve Adjust Data Entity",
+                }
+              ],
             },
             {
-              key: "3",
-              icon: <UsergroupAddOutlined />,
-              label: "Customer",
+              key: "5",
+              icon: <ShoppingOutlined />,
+              label: "Submission",
+              children: [
+                {
+                  key: "6",
+                  label: "Fianl Approval",
+                }
+              ],
+            },
+            {
+              key: "7",
+              icon: <IssuesCloseOutlined />,
+              label: "Data Issue",
+            },
+            {
+              key: "8",
+              icon: <UserOutlined />,
+              label: "User Data Entry",
+              children: [
+                {
+                  key: "9",
+                  label: "User Data Entry",
+                },
+                {
+                  key: "10",
+                  label: "User Data Entry - Upload",
+                },
+                {
+                  key: "11",
+                  label: "Approve User Data Entry",
+                }
+              ],
             },
           ]}
         />
@@ -178,7 +224,7 @@ function LayoutPage(props) {
               </Breadcrumb.Item>
               <Breadcrumb.Separator />
               <Breadcrumb.Item>
-              <ContainerOutlined style={{ color: "white" }}/>
+                <ContainerOutlined style={{ color: "white" }} />
                 <Link href="/">Item</Link>
               </Breadcrumb.Item>
             </Breadcrumb>
