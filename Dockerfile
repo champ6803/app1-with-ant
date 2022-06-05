@@ -11,7 +11,7 @@ RUN yarn
 COPY . .
 
 # Build project
-RUN npm run build
+RUN npm run build -prod
 
 # Exposing port 9000 to connect external
 EXPOSE 9000
