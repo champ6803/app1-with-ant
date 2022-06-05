@@ -40,7 +40,7 @@ import {
   HomeOutlined,
   ContainerOutlined,
   DatabaseOutlined,
-  IssuesCloseOutlined
+  IssuesCloseOutlined,
 } from "@ant-design/icons";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -48,7 +48,20 @@ const { Header, Content, Footer, Sider } = Layout;
 function LayoutPage(props) {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState([]);
+  const [openKeys, setOpenKeys] = useState([]);
   const pathName = props.router.pathname;
+
+  const rootSubmenuKeys = [
+    "sub1",
+    "sub2",
+    "sub3",
+    "sub4",
+    "sub5",
+    "sub6",
+    "sub7",
+    "sub8",
+    "sub9",
+  ];
 
   const menu = (
     <Menu
@@ -67,6 +80,16 @@ function LayoutPage(props) {
       ]}
     />
   );
+
+  const onOpenChange = (val) => {
+    setOpenKeys(val);
+    // const latestOpenKey = val.find((key) => openKeys.indexOf(key) === -1);
+    // if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    //   setOpenKeys(val);
+    // } else {
+    //   setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+    // }
+  };
 
   const handleClickMenu = (e) => {
     console.log("e => ", e);
@@ -100,6 +123,7 @@ function LayoutPage(props) {
         break;
       case "/product":
         setSelectedMenu(["3"]);
+        setOpenKeys(["sub2"]);
         break;
     }
   };
@@ -128,6 +152,8 @@ function LayoutPage(props) {
           theme="dark"
           mode="inline"
           selectedKeys={selectedMenu}
+          openKeys={openKeys}
+          onOpenChange={onOpenChange}
           items={[
             {
               key: "1",
@@ -135,7 +161,7 @@ function LayoutPage(props) {
               label: "Home",
             },
             {
-              key: "2",
+              key: "sub2",
               icon: <DatabaseOutlined />,
               label: "Data Entity",
               children: [
@@ -146,18 +172,18 @@ function LayoutPage(props) {
                 {
                   key: "4",
                   label: "Approve Adjust Data Entity",
-                }
+                },
               ],
             },
             {
-              key: "5",
+              key: "sub5",
               icon: <ShoppingOutlined />,
               label: "Submission",
               children: [
                 {
                   key: "6",
                   label: "Fianl Approval",
-                }
+                },
               ],
             },
             {
@@ -166,7 +192,7 @@ function LayoutPage(props) {
               label: "Data Issue",
             },
             {
-              key: "8",
+              key: "sub8",
               icon: <UserOutlined />,
               label: "User Data Entry",
               children: [
@@ -181,7 +207,7 @@ function LayoutPage(props) {
                 {
                   key: "11",
                   label: "Approve User Data Entry",
-                }
+                },
               ],
             },
           ]}
